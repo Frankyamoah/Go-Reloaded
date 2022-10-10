@@ -21,4 +21,12 @@ func main() {
 
 	// Array of keywords to search through
 	keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
+
+	// loop through array of arguements
+
+	for i := 0; i < len(wordArray); i++ {
+		// loop through array of keyWords
+		for j := 0; j < len(keyWordArray); j++ {
+		}
+	}
 }
