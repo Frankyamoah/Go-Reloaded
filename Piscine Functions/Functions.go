@@ -1,6 +1,8 @@
 package piscine
 
-import "math"
+import (
+	"strconv"
+)
 
 // Capitilize function
 func Capitalize(s string) string {
@@ -95,16 +97,21 @@ func ToLower(s string) string {
 }
 
 // Function to Convert binary number into decimal number
-func convertBinaryToDecimal(number int) int {
-	decimal := 0
-	counter := 0.0
-	remainder := 0
 
-	for number != 0 {
-		remainder = number % 10
-		decimal += remainder * int(math.Pow(2.0, counter))
-		number = number / 10
-		counter++
+func convertBinaryToDecimal(number string) string {
+	result, err := strconv.ParseInt(number, 2, 64)
+	if err != nil {
+		return number
 	}
-	return decimal
+	return strconv.Itoa(int(result))
+}
+
+// Function to Convert Hexadecimal to decimal
+
+func convertHexToDecimal(hexaString string) string {
+	result, err := strconv.ParseInt(hexaString, 16, 64)
+	if err != nil {
+		return hexaString
+	}
+	return strconv.Itoa(int(result))
 }

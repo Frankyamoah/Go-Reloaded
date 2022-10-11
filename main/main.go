@@ -22,19 +22,37 @@ func main() {
 	// Array of keywords to search through
 	keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
 
-	punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
+	// An integer array to store the position of discovered keywords
+	var keyWordPosition []int
+	// punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
 
 	// loop through array of arguements
 	for i := 0; i < len(wordArray); i++ {
 		// loop through array of keyWord
 		for j := 0; j < len(keyWordArray); j++ {
-			// loop through punctuation Array
-			for k := 0; k < len(punctuationArray); k++ {
-				for k := 0; k < len(punctuationArray); k++ {
-					if (wordArray[i] == keyWordArray[0]) && (keyWordArray[j] == keyWordArray[0]) && (wordArray[i] == keyWordArray[j]) {
-					}
-				}
-			})
+			// swtich statements to cycle through
+			switch wordArray[i] {
+			case "(hex)":
+				piscine.convertHexToDecimal(wordArray[i-1])
+				keyWordPosition = append(keyWordPosition, i)
+
+			case "(bin)":
+				piscine.convertBinaryToDecimal(wordArray[i-1])
+				keyWordPosition = append(keyWordPosition, i)
+
+			case "(up)":
+				piscine.ToUpper(wordArray[i-1])
+				keyWordPosition = append(keyWordPosition, i)
+
+			case "(low)":
+				piscine.ToLower(wordArray[i-1])
+				keyWordPosition = append(keyWordPosition, i)
+
+			case "(cap)":
+				piscine.Capitalize(wordArray[i-1])
+				keyWordPosition = append(keyWordPosition, i)
+
+			}
 		}
 	}
 }
