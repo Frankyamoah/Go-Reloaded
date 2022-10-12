@@ -22,7 +22,7 @@ func main() {
 	wordArray := strings.Fields(stringContent)
 
 	// Array of keywords to search through
-	keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
+	// keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
 
 	// An integer array to store the position of discovered keywords
 	var keyWordPosition []int
@@ -71,6 +71,18 @@ func main() {
 			for j := 1; j <= integer; j++ {
 				piscine.Capitalize(wordArray[i-j])
 				keyWordPosition = append(keyWordPosition, i)
+			}
+		default:
+		}
+	}
+	// Deleting the keywords
+	counter := 0
+	for i := 0; i < len(keyWordPosition); i++ {
+		for j := 0; j < len(wordArray); j++ {
+			if i == j {
+				wordArray = append(wordArray[:i], wordArray[i:]...)
+				counter++
+
 			}
 		}
 	}
