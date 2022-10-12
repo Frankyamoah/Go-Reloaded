@@ -79,6 +79,7 @@ func main() {
 	counter := 0
 	for i := 0; i < len(keyWordPosition); i++ {
 		for j := 0; j < len(wordArray); j++ {
+			keyWordPosition[i] -= counter
 			if i == j {
 				wordArray = append(wordArray[:i], wordArray[i:]...)
 				counter++
