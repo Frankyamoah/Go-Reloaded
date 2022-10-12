@@ -98,7 +98,7 @@ func ToLower(s string) string {
 
 // Function to Convert binary number into decimal number
 
-func convertBinaryToDecimal(number string) string {
+func ConvertBinaryToDecimal(number string) string {
 	result, err := strconv.ParseInt(number, 2, 64)
 	if err != nil {
 		return number
@@ -108,7 +108,7 @@ func convertBinaryToDecimal(number string) string {
 
 // Function to Convert Hexadecimal to decimal
 
-func convertHexToDecimal(hexaString string) string {
+func ConvertHexToDecimal(hexaString string) string {
 	result, err := strconv.ParseInt(hexaString, 16, 64)
 	if err != nil {
 		return hexaString

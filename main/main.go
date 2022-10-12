@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"piscine"
+	"strconv"
 	"strings"
 )
 
@@ -32,11 +33,11 @@ func main() {
 		// swtich statements to cycle through
 		switch wordArray[i] {
 		case "(hex)":
-			piscine.convertHexToDecimal(wordArray[i-1])
+			piscine.ConvertHexToDecimal(wordArray[i-1])
 			keyWordPosition = append(keyWordPosition, i)
 
 		case "(bin)":
-			piscine.convertBinaryToDecimal(wordArray[i-1])
+			piscine.ConvertBinaryToDecimal(wordArray[i-1])
 			keyWordPosition = append(keyWordPosition, i)
 
 		case "(up)":
@@ -51,9 +52,24 @@ func main() {
 			piscine.Capitalize(wordArray[i-1])
 			keyWordPosition = append(keyWordPosition, i)
 		case "(up,":
-			for j := 1; j < len(wordArray[(i+1)-1]); j++ {
+			number:= strings.Trim(wordArray[i+1], ")")
+			integer,_ := strconv.Atoi(number)
+			for j := 1; j <= integer; j++ {
+				piscine.ToUpper(wordArray[i-j])
+				keyWordPosition = append(keyWordPosition, i)
 			}
-
+		case "(low,":
+			number:= strings.Trim(wordArray[i+1], ")")
+			integer,_ := strconv.Atoi(number)
+			for j := 1; j <= integer; j++ {
+				piscine.ToLower(wordArray[i-j])
+				keyWordPosition = append(keyWordPosition, i)
+			}
+		case "(cap,": 
+		number:= strings.Trim(wordArray[i+1], ")")
+			integer,_ := strconv.Atoi(number)
+			for j := 1; j <= integer; j++ {
+				piscine.Capitalize(wordArray[i-j])
 		}
 	}
 }

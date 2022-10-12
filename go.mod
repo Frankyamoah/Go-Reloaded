@@ -1,3 +1,3 @@
-module go-reloaded
+module piscine
 
 go 1.16
