@@ -52,24 +52,26 @@ func main() {
 			piscine.Capitalize(wordArray[i-1])
 			keyWordPosition = append(keyWordPosition, i)
 		case "(up,":
-			number:= strings.Trim(wordArray[i+1], ")")
-			integer,_ := strconv.Atoi(number)
+			number := strings.Trim(wordArray[i+1], ")")
+			integer, _ := strconv.Atoi(number)
 			for j := 1; j <= integer; j++ {
 				piscine.ToUpper(wordArray[i-j])
 				keyWordPosition = append(keyWordPosition, i)
 			}
 		case "(low,":
-			number:= strings.Trim(wordArray[i+1], ")")
-			integer,_ := strconv.Atoi(number)
+			number := strings.Trim(wordArray[i+1], ")")
+			integer, _ := strconv.Atoi(number)
 			for j := 1; j <= integer; j++ {
 				piscine.ToLower(wordArray[i-j])
 				keyWordPosition = append(keyWordPosition, i)
 			}
-		case "(cap,": 
-		number:= strings.Trim(wordArray[i+1], ")")
-			integer,_ := strconv.Atoi(number)
+		case "(cap,":
+			number := strings.Trim(wordArray[i+1], ")")
+			integer, _ := strconv.Atoi(number)
 			for j := 1; j <= integer; j++ {
 				piscine.Capitalize(wordArray[i-j])
+				keyWordPosition = append(keyWordPosition, i)
+			}
 		}
 	}
 }
