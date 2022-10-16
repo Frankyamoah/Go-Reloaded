@@ -81,7 +81,6 @@ func converter(wordArray []string) []string {
 			}
 		case "(cap,":
 			number := strings.Trim(wordArray[i+1], ")")
-			fmt.Println(wordArray[i+1])
 			integer, _ := strconv.Atoi(number)
 			for j := 1; j <= integer; j++ {
 				convCAP2 := strings.Title(result[len(result)-j])
@@ -89,6 +88,7 @@ func converter(wordArray []string) []string {
 				keyWordPosition = append(keyWordPosition, i)
 				keyWordPosition = append(keyWordPosition, i+1)
 			}
+			i++
 		default:
 			result = append(result, wordArray[i])
 		}

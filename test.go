@@ -60,44 +60,44 @@ func main() {
 			keyWordPosition = append(keyWordPosition, i)
 			insert(wordArray, i, convert)
 
-		case "(up,":
-			number := strings.Trim(wordArray[i+1], ")")
-			integer, _ := strconv.Atoi(number)
-			for j := 1; j <= integer; j++ {
-				piscine.ToUpper(wordArray[i-j])
-				keyWordPosition = append(keyWordPosition, i)
-			}
-		case "(low,":
-			number := strings.Trim(wordArray[i+1], ")")
-			integer, _ := strconv.Atoi(number)
-			for j := 1; j <= integer; j++ {
-				piscine.ToLower(wordArray[i-j])
-				keyWordPosition = append(keyWordPosition, i)
-			}
-		case "(cap,":
-			number := strings.Trim(wordArray[i+1], ")")
-			integer, _ := strconv.Atoi(number)
-			for j := 1; j <= integer; j++ {
-				piscine.Capitalize(wordArray[i-j])
-				keyWordPosition = append(keyWordPosition, i)
-			}
-		default:
-			fmt.Printf(wordArray[i])
-		}
-	}
-	// Deleting the keywords
-	counter := 0
-	for i := 0; i < len(keyWordPosition); i++ {
-		for j := 0; j < len(wordArray); j++ {
-			keyWordPosition[i] -= counter
-			if i == j {
-				wordArray = append(wordArray[:i], wordArray[i:]...)
-				counter++
+// 		case "(up,":
+// 			number := strings.Trim(wordArray[i+1], ")")
+// 			integer, _ := strconv.Atoi(number)
+// 			for j := 1; j <= integer; j++ {
+// 				piscine.ToUpper(wordArray[i-j])
+// 				keyWordPosition = append(keyWordPosition, i)
+// 			}
+// 		case "(low,":
+// 			number := strings.Trim(wordArray[i+1], ")")
+// 			integer, _ := strconv.Atoi(number)
+// 			for j := 1; j <= integer; j++ {
+// 				piscine.ToLower(wordArray[i-j])
+// 				keyWordPosition = append(keyWordPosition, i)
+// 			}
+// 		case "(cap,":
+// 			number := strings.Trim(wordArray[i+1], ")")
+// 			integer, _ := strconv.Atoi(number)
+// 			for j := 1; j <= integer; j++ {
+// 				piscine.Capitalize(wordArray[i-j])
+// 				keyWordPosition = append(keyWordPosition, i)
+// 			}
+// 		default:
+// 			fmt.Printf(wordArray[i])
+// 		}
+// 	}
+// 	// Deleting the keywords
+// 	counter := 0
+// 	for i := 0; i < len(keyWordPosition); i++ {
+// 		for j := 0; j < len(wordArray); j++ {
+// 			keyWordPosition[i] -= counter
+// 			if i == j {
+// 				wordArray = append(wordArray[:i], wordArray[i:]...)
+// 				counter++
 
-			}
-		}
-	}
-}
+// 			}
+// 		}
+// 	}
+// }
 
 func insert(orig []string, index int, value string) []string {
 	if index < 0 {
