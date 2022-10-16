@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
-	"piscine"
 	"strconv"
 	"strings"
 )
@@ -20,71 +20,102 @@ func main() {
 
 	// Converts string into string Array
 	wordArray := strings.Fields(stringContent)
+	converter(wordArray)
+}
 
-	// Array of keywords to search through
-	// keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
+// func insert(orig []string, index int, value string) []string {
+// 	if index < 0 {
+// 		return nil
+// 	}
 
-	// An integer array to store the position of discovered keywords
-	var keyWordPosition []int
-	// punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
+// 	if index >= len(orig) {
+// 		return append(orig, value)
+// 	}
+// 	orig[index] = value
+// 	orig = append(orig, orig[index])
 
-	// loop through array of arguements
+// 	return orig
+// }
+
+// Array of keywords to search through
+// keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
+
+// An integer array to store the position of discovered keywords
+var keyWordPosition []int
+
+// punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
+
+// loop through array of arguements
+func converter(wordArray []string) []string {
+	var result []string
 	for i := 0; i < len(wordArray); i++ {
 		// swtich statements to cycle through
+
 		switch wordArray[i] {
 		case "(hex)":
-			piscine.ConvertHexToDecimal(wordArray[i-1])
+			convHex, _ := strconv.ParseInt(wordArray[i-1], 16, 64)
 			keyWordPosition = append(keyWordPosition, i)
+			result[len(result)-1] = fmt.Sprint(convHex)
 
 		case "(bin)":
-			piscine.ConvertBinaryToDecimal(wordArray[i-1])
+			convBin, _ := strconv.ParseInt(wordArray[i-1], 2, 64)
 			keyWordPosition = append(keyWordPosition, i)
+			result[len(result)-1] = fmt.Sprint(convBin)
 
 		case "(up)":
-			piscine.ToUpper(wordArray[i-1])
+			convUP := strings.ToUpper(wordArray[i-1])
 			keyWordPosition = append(keyWordPosition, i)
+			result[len(result)-1] = fmt.Sprint(convUP)
 
 		case "(low)":
-			piscine.ToLower(wordArray[i-1])
+			convLOW := strings.ToLower(wordArray[i-1])
 			keyWordPosition = append(keyWordPosition, i)
+			result[len(result)-1] = fmt.Sprint(convLOW)
 
 		case "(cap)":
-			piscine.Capitalize(wordArray[i-1])
+			convCAP := strings.Title(wordArray[i-1])
 			keyWordPosition = append(keyWordPosition, i)
+			result[len(result)-1] = fmt.Sprint(convCAP)
+
 		case "(up,":
 			number := strings.Trim(wordArray[i+1], ")")
 			integer, _ := strconv.Atoi(number)
 			for j := 1; j <= integer; j++ {
-				piscine.ToUpper(wordArray[i-j])
+				convUP2 := strings.ToUpper(result[len(result)-j])
+				result[len(result)-j] = fmt.Sprint(convUP2)
 				keyWordPosition = append(keyWordPosition, i)
 			}
 		case "(low,":
 			number := strings.Trim(wordArray[i+1], ")")
 			integer, _ := strconv.Atoi(number)
 			for j := 1; j <= integer; j++ {
-				piscine.ToLower(wordArray[i-j])
+				convLOW2 := strings.ToLower(result[len(result)-j])
+				result[len(result)-j] = fmt.Sprint(convLOW2)
 				keyWordPosition = append(keyWordPosition, i)
 			}
 		case "(cap,":
 			number := strings.Trim(wordArray[i+1], ")")
 			integer, _ := strconv.Atoi(number)
 			for j := 1; j <= integer; j++ {
-				piscine.Capitalize(wordArray[i-j])
+				convCAP2 := strings.Title(result[len(result)-j])
+				result[len(result)-j] = fmt.Sprint(convCAP2)
 				keyWordPosition = append(keyWordPosition, i)
 			}
 		default:
+			result = append(result, wordArray[i])
 		}
 	}
 	// Deleting the keywords
 	counter := 0
 	for i := 0; i < len(keyWordPosition); i++ {
-		for j := 0; j < len(wordArray); j++ {
+		for j := 0; j < len(result); j++ {
 			keyWordPosition[i] -= counter
 			if i == j {
-				wordArray = append(wordArray[:i], wordArray[i:]...)
+				result = append(result[:i], result[i:]...)
 				counter++
 
 			}
 		}
 	}
+	return result
 }
