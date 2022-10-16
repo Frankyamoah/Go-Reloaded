@@ -23,23 +23,6 @@ func main() {
 	converter(wordArray)
 }
 
-// func insert(orig []string, index int, value string) []string {
-// 	if index < 0 {
-// 		return nil
-// 	}
-
-// 	if index >= len(orig) {
-// 		return append(orig, value)
-// 	}
-// 	orig[index] = value
-// 	orig = append(orig, orig[index])
-
-// 	return orig
-// }
-
-// Array of keywords to search through
-// keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
-
 // An integer array to store the position of discovered keywords
 var keyWordPosition []int
 
@@ -119,3 +102,20 @@ func converter(wordArray []string) []string {
 	}
 	return result
 }
+
+// func insert(orig []string, index int, value string) []string {
+// 	if index < 0 {
+// 		return nil
+// 	}
+
+// 	if index >= len(orig) {
+// 		return append(orig, value)
+// 	}
+// 	orig[index] = value
+// 	orig = append(orig, orig[index])
+
+// 	return orig
+// }
+
+// Array of keywords to search through
+// keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
