@@ -20,7 +20,8 @@ func main() {
 
 	// Converts string into string Array
 	wordArray := strings.Fields(stringContent)
-	converter(wordArray)
+
+	fmt.Println(converter(wordArray))
 }
 
 // An integer array to store the position of discovered keywords
@@ -67,6 +68,7 @@ func converter(wordArray []string) []string {
 				convUP2 := strings.ToUpper(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convUP2)
 				keyWordPosition = append(keyWordPosition, i)
+				keyWordPosition = append(keyWordPosition, i+1)
 			}
 		case "(low,":
 			number := strings.Trim(wordArray[i+1], ")")
@@ -75,6 +77,7 @@ func converter(wordArray []string) []string {
 				convLOW2 := strings.ToLower(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convLOW2)
 				keyWordPosition = append(keyWordPosition, i)
+				keyWordPosition = append(keyWordPosition, i+1)
 			}
 		case "(cap,":
 			number := strings.Trim(wordArray[i+1], ")")
@@ -83,6 +86,7 @@ func converter(wordArray []string) []string {
 				convCAP2 := strings.Title(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convCAP2)
 				keyWordPosition = append(keyWordPosition, i)
+				keyWordPosition = append(keyWordPosition, i+1)
 			}
 		default:
 			result = append(result, wordArray[i])
