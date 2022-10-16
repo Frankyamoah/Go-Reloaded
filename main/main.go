@@ -88,6 +88,7 @@ func converter(wordArray []string) []string {
 				keyWordPosition = append(keyWordPosition, i)
 				keyWordPosition = append(keyWordPosition, i+1)
 			}
+			// no idea why this isn't working
 			i++
 		default:
 			result = append(result, wordArray[i])
