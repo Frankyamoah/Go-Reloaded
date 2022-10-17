@@ -24,6 +24,25 @@ func main() {
 	fmt.Println(converter(wordArray))
 }
 
+func vowel(wordArr []string) []string {
+	vowels := [12]string{"a", "e", "i", "o", "u", "h", "A", "E", "I", "O", "U", "H"}
+	for i, _ := range wordArr {
+		for _, vowel := range vowels {
+			if wordArr[i] == "a" {
+				variable := []byte(wordArr[i+1])
+				for x := 0; x < len(variable); x++ {
+					if string(variable[0]) == vowel {
+						wordArr[i] += "n"
+						break
+
+					}
+				}
+			}
+		}
+	}
+	return wordArr
+}
+
 func puncEditor(wordArr []string) []string {
 	punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
 	for i, word := range wordArr {
@@ -58,6 +77,7 @@ func puncEditor(wordArr []string) []string {
 		if word == "'" && count == 0 {
 			count += 1
 			wordArr[i+1] = word + wordArr[i+1]
+			wordArr = append(wordArr[:i], wordArr[i+1:]...)
 		}
 	}
 	for i, word := range wordArr {
@@ -126,5 +146,5 @@ func converter(wordArray []string) []string {
 			result = append(result, wordArray[i])
 		}
 	}
-	return puncEditor(result)
+	return puncEditor(vowel(result))
 }
