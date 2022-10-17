@@ -90,6 +90,7 @@ func puncEditor(wordArr []string) []string {
 	return wordArr
 }
 
+// bob
 // loop through array of arguements
 func converter(wordArray []string) []string {
 	var result []string
