@@ -21,7 +21,7 @@ func main() {
 	// Converts string into string Array
 	wordArray := strings.Fields(stringContent)
 
-	fmt.Println(converter(puncEditor(wordArray)))
+	fmt.Println(converter(wordArray))
 }
 
 func puncEditor(wordArr []string) []string {
@@ -62,6 +62,8 @@ func puncEditor(wordArr []string) []string {
 	}
 	for i, word := range wordArr {
 		if word == "'" {
+			wordArr[i-1] = wordArr[i-1] + word
+			wordArr = append(wordArr[:i], wordArr[i+1:]...)
 		}
 	}
 
@@ -124,5 +126,5 @@ func converter(wordArray []string) []string {
 			result = append(result, wordArray[i])
 		}
 	}
-	return result
+	return puncEditor(result)
 }
