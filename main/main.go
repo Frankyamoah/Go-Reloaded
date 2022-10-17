@@ -21,13 +21,52 @@ func main() {
 	// Converts string into string Array
 	wordArray := strings.Fields(stringContent)
 
-	fmt.Println(converter(wordArray))
+	fmt.Println(converter(puncEditor(wordArray)))
 }
 
-// An integer array to store the position of discovered keywords
-var keyWordPosition []int
+func puncEditor(wordArr []string) []string {
+	punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
+	for i, word := range wordArr {
+		for _, punc := range punctuationArray {
+			// for dealing with punc connecting to word
+			if string(word[0]) == punc && string(word[len(word)-1]) != punc {
+				wordArr[i-1] += punc
+				wordArr[i] = word[1:]
+			}
+		}
+	}
+	// for dealing with punc at end of string
+	for i, word := range wordArr {
+		for _, punc := range punctuationArray {
+			if (string(word[0]) == punc) && (wordArr[len(wordArr)-1] == wordArr[i]) {
+				wordArr[i-1] += word
+				wordArr = wordArr[:len(wordArr)-1]
+			}
+		}
+	}
+	// for dealing with punc in the middle of string
+	for i, word := range wordArr {
+		for _, punc := range punctuationArray {
+			if string(word[0]) == punc && string(word[len(word)-1]) == punc && wordArr[i] != wordArr[len(wordArr)-1] {
+				wordArr[i-1] += word
+				wordArr = append(wordArr[:i], wordArr[i+1:]...)
+			}
+		}
+	}
+	count := 0
+	for i, word := range wordArr {
+		if word == "'" && count == 0 {
+			count += 1
+			wordArr[i+1] = word + wordArr[i+1]
+		}
+	}
+	for i, word := range wordArr {
+		if word == "'" {
+		}
+	}
 
-// punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
+	return wordArr
+}
 
 // loop through array of arguements
 func converter(wordArray []string) []string {
@@ -38,27 +77,22 @@ func converter(wordArray []string) []string {
 		switch wordArray[i] {
 		case "(hex)":
 			convHex, _ := strconv.ParseInt(wordArray[i-1], 16, 64)
-			keyWordPosition = append(keyWordPosition, i)
 			result[len(result)-1] = fmt.Sprint(convHex)
 
 		case "(bin)":
 			convBin, _ := strconv.ParseInt(wordArray[i-1], 2, 64)
-			keyWordPosition = append(keyWordPosition, i)
 			result[len(result)-1] = fmt.Sprint(convBin)
 
 		case "(up)":
 			convUP := strings.ToUpper(wordArray[i-1])
-			keyWordPosition = append(keyWordPosition, i)
 			result[len(result)-1] = fmt.Sprint(convUP)
 
 		case "(low)":
 			convLOW := strings.ToLower(wordArray[i-1])
-			keyWordPosition = append(keyWordPosition, i)
 			result[len(result)-1] = fmt.Sprint(convLOW)
 
 		case "(cap)":
 			convCAP := strings.Title(wordArray[i-1])
-			keyWordPosition = append(keyWordPosition, i)
 			result[len(result)-1] = fmt.Sprint(convCAP)
 
 		case "(up,":
@@ -67,8 +101,6 @@ func converter(wordArray []string) []string {
 			for j := 1; j <= integer; j++ {
 				convUP2 := strings.ToUpper(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convUP2)
-				keyWordPosition = append(keyWordPosition, i)
-				// keyWordPosition = append(keyWordPosition, i+1)
 			}
 			i++
 		case "(low,":
@@ -77,8 +109,6 @@ func converter(wordArray []string) []string {
 			for j := 1; j <= integer; j++ {
 				convLOW2 := strings.ToLower(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convLOW2)
-				keyWordPosition = append(keyWordPosition, i)
-				// keyWordPosition = append(keyWordPosition, i+1)
 			}
 			i++
 		case "(cap,":
@@ -87,25 +117,11 @@ func converter(wordArray []string) []string {
 			for j := 1; j <= integer; j++ {
 				convCAP2 := strings.Title(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convCAP2)
-				keyWordPosition = append(keyWordPosition, i)
-				// keyWordPosition = append(keyWordPosition, i+1)
+
 			}
-			// no idea why this isn't working
 			i++
 		default:
 			result = append(result, wordArray[i])
-		}
-	}
-	// Deleting the keywords
-	counter := 0
-	for i := 0; i < len(keyWordPosition); i++ {
-		for j := 0; j < len(result); j++ {
-			keyWordPosition[i] -= counter
-			if i == j {
-				result = append(result[:i], result[i:]...)
-				counter++
-
-			}
 		}
 	}
 	return result
