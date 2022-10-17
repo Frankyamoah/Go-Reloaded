@@ -68,8 +68,9 @@ func converter(wordArray []string) []string {
 				convUP2 := strings.ToUpper(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convUP2)
 				keyWordPosition = append(keyWordPosition, i)
-				keyWordPosition = append(keyWordPosition, i+1)
+				// keyWordPosition = append(keyWordPosition, i+1)
 			}
+			i++
 		case "(low,":
 			number := strings.Trim(wordArray[i+1], ")")
 			integer, _ := strconv.Atoi(number)
@@ -77,8 +78,9 @@ func converter(wordArray []string) []string {
 				convLOW2 := strings.ToLower(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convLOW2)
 				keyWordPosition = append(keyWordPosition, i)
-				keyWordPosition = append(keyWordPosition, i+1)
+				// keyWordPosition = append(keyWordPosition, i+1)
 			}
+			i++
 		case "(cap,":
 			number := strings.Trim(wordArray[i+1], ")")
 			integer, _ := strconv.Atoi(number)
@@ -86,7 +88,7 @@ func converter(wordArray []string) []string {
 				convCAP2 := strings.Title(result[len(result)-j])
 				result[len(result)-j] = fmt.Sprint(convCAP2)
 				keyWordPosition = append(keyWordPosition, i)
-				keyWordPosition = append(keyWordPosition, i+1)
+				// keyWordPosition = append(keyWordPosition, i+1)
 			}
 			// no idea why this isn't working
 			i++
@@ -108,20 +110,3 @@ func converter(wordArray []string) []string {
 	}
 	return result
 }
-
-// func insert(orig []string, index int, value string) []string {
-// 	if index < 0 {
-// 		return nil
-// 	}
-
-// 	if index >= len(orig) {
-// 		return append(orig, value)
-// 	}
-// 	orig[index] = value
-// 	orig = append(orig, orig[index])
-
-// 	return orig
-// }
-
-// Array of keywords to search through
-// keyWordArray := [8]string{"(hex)", "(bin)", "(up)", "(up,", "(low)", "(low,", "(cap),", "(cap,"}
