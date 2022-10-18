@@ -21,76 +21,29 @@ func main() {
 	// Converts string into string Array
 	wordArray := strings.Fields(stringContent)
 
-	fmt.Println(converter(wordArray))
+	// Variable of converted input
+	convText := converter(wordArray)
+
+	// Seperates text by spaces
+	finalText := strings.Join(convText, " ")
+
+	// Creation of the result file where the converted text is displayed
+	result, err := os.Create("result.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	// closing of newly created file
+	defer result.Close()
+
+	// loops through final string writing it into the file
+	for _, word := range finalText {
+		_, err := result.WriteString(string(word))
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 }
 
-func vowel(wordArr []string) []string {
-	vowels := [12]string{"a", "e", "i", "o", "u", "h", "A", "E", "I", "O", "U", "H"}
-	for i, _ := range wordArr {
-		for _, vowel := range vowels {
-			if wordArr[i] == "a" {
-				variable := []byte(wordArr[i+1])
-				for x := 0; x < len(variable); x++ {
-					if string(variable[0]) == vowel {
-						wordArr[i] += "n"
-						break
-
-					}
-				}
-			}
-		}
-	}
-	return wordArr
-}
-
-func puncEditor(wordArr []string) []string {
-	punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
-	for i, word := range wordArr {
-		for _, punc := range punctuationArray {
-			// for dealing with punc connecting to word
-			if string(word[0]) == punc && string(word[len(word)-1]) != punc {
-				wordArr[i-1] += punc
-				wordArr[i] = word[1:]
-			}
-		}
-	}
-	// for dealing with punc at end of string
-	for i, word := range wordArr {
-		for _, punc := range punctuationArray {
-			if (string(word[0]) == punc) && (wordArr[len(wordArr)-1] == wordArr[i]) {
-				wordArr[i-1] += word
-				wordArr = wordArr[:len(wordArr)-1]
-			}
-		}
-	}
-	// for dealing with punc in the middle of string
-	for i, word := range wordArr {
-		for _, punc := range punctuationArray {
-			if string(word[0]) == punc && string(word[len(word)-1]) == punc && wordArr[i] != wordArr[len(wordArr)-1] {
-				wordArr[i-1] += word
-				wordArr = append(wordArr[:i], wordArr[i+1:]...)
-			}
-		}
-	}
-	count := 0
-	for i, word := range wordArr {
-		if word == "'" && count == 0 {
-			count += 1
-			wordArr[i+1] = word + wordArr[i+1]
-			wordArr = append(wordArr[:i], wordArr[i+1:]...)
-		}
-	}
-	for i, word := range wordArr {
-		if word == "'" {
-			wordArr[i-1] = wordArr[i-1] + word
-			wordArr = append(wordArr[:i], wordArr[i+1:]...)
-		}
-	}
-
-	return wordArr
-}
-
-// bob
 // loop through array of arguements
 func converter(wordArray []string) []string {
 	var result []string
@@ -148,4 +101,78 @@ func converter(wordArray []string) []string {
 		}
 	}
 	return puncEditor(vowel(result))
+}
+
+func puncEditor(wordArr []string) []string {
+	punctuationArray := [6]string{".", ",", "!", "?", ":", ";"}
+	for i, word := range wordArr {
+		for _, punc := range punctuationArray {
+			// for dealing with punc connecting to word
+			if string(word[0]) == punc && string(word[len(word)-1]) != punc {
+				wordArr[i-1] += punc
+				wordArr[i] = word[1:]
+			}
+		}
+	}
+	// for dealing with punc at end of string
+	for i, word := range wordArr {
+		for _, punc := range punctuationArray {
+			if (string(word[0]) == punc) && (wordArr[len(wordArr)-1] == wordArr[i]) {
+				wordArr[i-1] += word
+				wordArr = wordArr[:len(wordArr)-1]
+			}
+		}
+	}
+	// for dealing with punc in the middle of string
+	for i, word := range wordArr {
+		for _, punc := range punctuationArray {
+			if string(word[0]) == punc && string(word[len(word)-1]) == punc && wordArr[i] != wordArr[len(wordArr)-1] {
+				wordArr[i-1] += word
+				wordArr = append(wordArr[:i], wordArr[i+1:]...)
+			}
+		}
+	}
+	// If apostrophe is before a word this joins it to the next word
+	count := 0
+	for i, word := range wordArr {
+		if word == "'" && count == 0 {
+			count += 1
+			wordArr[i+1] = word + wordArr[i+1]
+			wordArr = append(wordArr[:i], wordArr[i+1:]...)
+		}
+	}
+	// This connects second apostraphe to the end of word
+	for i, word := range wordArr {
+		if word == "'" {
+			wordArr[i-1] = wordArr[i-1] + word
+			wordArr = append(wordArr[:i], wordArr[i+1:]...)
+		}
+	}
+
+	return wordArr
+}
+
+func vowel(wordArr []string) []string {
+	// Array of Vowels
+	vowels := [12]string{"a", "e", "i", "o", "u", "h", "A", "E", "I", "O", "U", "H"}
+	// Loop through string Array
+	for i := range wordArr {
+		// Loop through punctuation Array
+		for _, vowel := range vowels {
+			if wordArr[i] == "a" {
+				// The next word is placed in variable
+				variable := []byte(wordArr[i+1])
+				for x := 0; x < len(variable); x++ {
+					// refers to the first letter in string to see if it is a voewl
+					if string(variable[0]) == vowel {
+						// If true add n to the a
+						wordArr[i] += "n"
+						break
+
+					}
+				}
+			}
+		}
+	}
+	return wordArr
 }
